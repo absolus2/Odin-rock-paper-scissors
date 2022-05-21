@@ -17,38 +17,74 @@ function playerSelection(){
         case 2:{
             return gamePlays[1]
         }
-        default:{
+        case 3:{
             return gamePlays[2]
         }
     }
 }
-// create function to calculate who won from the input of the user and display
+// create function to calculate who won from the input of the user and the computer
 function playRound(computer, player){
-   if(computer === 'rock' && player === 'paper'){
-       return 'paper beats rock You WON!'
-   }
-   else if(computer === 'paper' && player === ' rock'){
-       return 'paper beats rock You LOSE!'
-   }
-   if(computer === 'scissors' && player === 'rock'){
-       return 'rock beats scissors You WON!'
-   }else if(computer === 'rock' && player === 'scissors'){
-       return 'rock beats scissors You LOSE!'
-   }
-   
-   if(computer === 'scissors' && player === 'paper'){
-       return 'scissors beat paper You LOSE!'
-   }
-   
-   else if(computer === 'paper' && player === 'scissors'){
-       return 'scissors beat paper You WON!'
+   if(computer === 'rock'){
+       if(player === 'paper'){
+           return 'paper beats rock You WON!'
+       }else if(player === 'rock'){
+           return 'rock against rock it`s a Draw'
+       }else if(player === 'scissors'){
+           return 'rock beat scissors You LOSE!'
+       }
    }
 
-   else{
-       return 'Draw'
+   if(computer === 'paper'){
+       if(player === 'rock'){
+           return 'paper beats rock You LOSE!'
+       }else if(player === 'paper'){
+           return 'Draw'
+       }else if(player === 'scissors'){
+           return 'scissors beat paper You WON!'
+       }
    }
+
+   if(computer === 'scissors'){
+       if(player === 'rock'){
+           return 'rock beats scissors You WON!'
+       }else if(player === 'rock'){
+           return 'rock beats scissors You LOSE!'
+       }else if(player === 'scissors'){
+           return 'Draw'
+       }
+   }
+
 
 }
 // display info in the console about who won
+function game(){
+    let win = 0;
+    let lose = 0;
+    let draw = 0;
+    for(let i = 0; i < 5; i ++){
+        let round = playRound(computerPlay(), playerSelection())
+        console.log(round)
+        if(round.includes('You WON!')){
+            win = win + 1;
+        }
+        else if(round.includes('You LOSE!')){
+            lose = lose + 1;
+        }
+        else if (round.includes('Draw')){
+            draw = draw + 1;
+        }
+    }
+    if(draw > win && draw > lose || win === lose){
+        console.log(`DRAW  draws: ${draw}`)
+    }
+    else if(win > lose){
+        console.log(`You WON! Victories: ${win}`)
+    }
+    else if(lose > win){
+        console.log(`You LOSE! Losses: ${lose}`)
+    }
+ 
+}
 
-console.log(playRound(computerPlay(), playerSelection()))
+
+game()
