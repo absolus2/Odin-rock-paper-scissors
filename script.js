@@ -8,7 +8,8 @@ function computerPlay(){
 }
 // Create function to get input from user Between rock papper scissor and return the input
 function playerSelection(){
-    let playerPlay = prompt(`Type a number base on your selection!: 1: ${gamePlays[0]}, 2: ${gamePlays[1]}, 3: ${gamePlays[2]}`)
+    let playerPlay = prompt(`Type a number base on your selection!: 1: 
+    ${gamePlays[0]}, 2: ${gamePlays[1]}, 3: ${gamePlays[2]}`)
     playerPlay = Number(playerPlay)
     switch(playerPlay){
         case 1:{
