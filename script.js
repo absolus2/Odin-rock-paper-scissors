@@ -6,23 +6,6 @@ function computerPlay(){
     let randomPlay = gamePlays[Math.floor(Math.random() * gamePlays.length)]
     return randomPlay
 }
-// Create function to get input from user Between rock papper scissor and return the input
-function playerSelection(){
-    let playerPlay = prompt(`Type a number base on your selection!: 1: 
-    ${gamePlays[0]}, 2: ${gamePlays[1]}, 3: ${gamePlays[2]}`)
-    playerPlay = Number(playerPlay)
-    switch(playerPlay){
-        case 1:{
-            return gamePlays[0]
-        }
-        case 2:{
-            return gamePlays[1]
-        }
-        case 3:{
-            return gamePlays[2]
-        }
-    }
-}
 // create function to calculate who won from the input of the user and the computer
 function playRound(computer, player){
    if(computer === 'rock'){
@@ -48,44 +31,73 @@ function playRound(computer, player){
    if(computer === 'scissors'){
        if(player === 'rock'){
            return 'rock beats scissors You WON!'
-       }else if(player === 'rock'){
-           return 'rock beats scissors You LOSE!'
+       }else if(player === 'paper'){
+           return 'scissors beats rock You LOSE!'
        }else if(player === 'scissors'){
            return 'Draw'
        }
    }
-
-
-}
-// display info in the console about who won
-function game(){
-    let win = 0;
-    let lose = 0;
-    let draw = 0;
-    for(let i = 0; i < 5; i ++){
-        let round = playRound(computerPlay(), playerSelection())
-        console.log(round)
-        if(round.includes('You WON!')){
-            win = win + 1;
-        }
-        else if(round.includes('You LOSE!')){
-            lose = lose + 1;
-        }
-        else if (round.includes('Draw')){
-            draw = draw + 1;
-        }
-    }
-    if(draw > win && draw > lose || win === lose){
-        console.log(`DRAW  draws: ${draw}`)
-    }
-    else if(win > lose){
-        console.log(`You WON! Victories: ${win}`)
-    }
-    else if(lose > win){
-        console.log(`You LOSE! Losses: ${lose}`)
-    }
- 
 }
 
+// add event listener to button to get the choice of the player
 
-game()
+const btns = document.querySelectorAll('button');
+
+// result div to display the result of the match
+
+const result = document.querySelector('.results');
+const score = document.querySelector('.score');
+
+let wins = 0;
+let loses = 0;
+let draw = 0;
+
+btns.forEach(btn => btn.addEventListener('click',function(e){
+    let playerChoice = e.target.classList.value.toLowerCase();
+    let who = playRound(computerPlay(), playerChoice);
+    result.textContent = who;
+    
+    scores(who)
+    end()
+}))
+
+function scores(results){
+    if(results.includes('WON!')){
+        wins = wins +1;
+        document.querySelector('.wins').textContent = wins
+    }
+    else if(results.includes('LOSE!')){
+        loses ++
+        document.querySelector('.loses').textContent = loses
+    }
+    else{
+        draw ++
+        document.querySelector('.draws').textContent = draw
+    }
+}
+
+function end(){
+    if(wins >= 5 && loses <= 4){
+        document.querySelector('.winner').textContent = "You WON!!! Congratz!";
+        defaultScore()
+    }
+    if( loses >= 5 && wins <= 4){
+        document.querySelector('.winner').textContent = 'You LOSE!! Try again!';
+        defaultScore()
+    }
+}
+
+function defaultScore(){
+    setTimeout(function(){
+        document.querySelector('.winner').textContent = '';
+
+        // reset the variables to 0
+        wins = 0;
+        loses = 0;
+        draw = 0;
+
+        document.querySelector('.draws').textContent = draw;
+        document.querySelector('.loses').textContent = loses;
+        document.querySelector('.wins').textContent = wins;
+    }, 3000)
+}
